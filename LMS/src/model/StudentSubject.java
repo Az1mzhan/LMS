@@ -1,20 +1,11 @@
 package model;
 
-public class StudentSubject extends Student implements Model {
+public abstract class StudentSubject implements Model {
     private int subjectId;
     private int studentId;
     private int teacherId;
     private double grade;
     private double attendance;
-
-    public StudentSubject(int id, String name, String surname, String email, String password, UserRole role, String groupName, String subject, int subjectId, int studentId, int teacherId, double grade, double attendance) {
-        super(id, name, surname, email, password, role, groupName, subject);
-        this.subjectId = subjectId;
-        this.studentId = getId();
-        this.teacherId = teacherId;
-        this.grade = grade;
-        this.attendance = attendance;
-    }
 
     public int getSubjectId() {
         return subjectId;
