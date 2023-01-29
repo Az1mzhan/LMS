@@ -10,7 +10,10 @@ public class Subject {
     }
 
     public void setName(String name) {
-        this.name = name;
+        if (name.length() != 0)
+            this.name = name;
+        else
+            throw new IllegalArgumentException("Illegal name format");
     }
 
     public String getSyllabus() {
@@ -18,7 +21,10 @@ public class Subject {
     }
 
     public void setSyllabus(String syllabus) {
-        this.syllabus = syllabus;
+        if (syllabus.length() != 0)
+            this.syllabus = syllabus;
+        else
+            throw new IllegalArgumentException("Illegal syllabus format");
     }
 
     public int getCreditNumber() {
@@ -26,6 +32,9 @@ public class Subject {
     }
 
     public void setCreditNumber(int creditNumber) {
-        this.creditNumber = creditNumber;
+        if (creditNumber >= 0)
+            this.creditNumber = creditNumber;
+        else
+            throw new ArithmeticException("Number should be equal or greater than zero");
     }
 }

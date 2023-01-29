@@ -29,7 +29,10 @@ public abstract class User implements Model {
 
     @Override
     public void setId(int id) {
-        this.id = id;
+        if (id >= 0)
+            this.id = id;
+        else
+            throw new ArithmeticException("Number should be equal or greater than zero");
     }
 
     @Override

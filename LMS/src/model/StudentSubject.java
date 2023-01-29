@@ -7,12 +7,23 @@ public abstract class StudentSubject implements Model {
     private double grade;
     private double attendance;
 
+    public StudentSubject(int subjectId, int studentId, int teacherId, double grade, double attendance) {
+        this.subjectId = subjectId;
+        this.studentId = studentId;
+        this.teacherId = teacherId;
+        this.grade = grade;
+        this.attendance = attendance;
+    }
+
     public int getSubjectId() {
         return subjectId;
     }
 
     public void setSubjectId(int subjectId) {
-        this.subjectId = subjectId;
+        if (subjectId >= 0)
+            this.subjectId = subjectId;
+        else
+            throw new ArithmeticException("Number should be equal or greater than zero");
     }
 
     public int getStudentId() {
@@ -20,7 +31,10 @@ public abstract class StudentSubject implements Model {
     }
 
     public void setStudentId(int studentId) {
-        this.studentId = studentId;
+        if (studentId >= 0)
+            this.studentId = studentId;
+        else
+            throw new ArithmeticException("Number should be equal or greater than zero");
     }
 
     public int getTeacherId() {
@@ -28,7 +42,10 @@ public abstract class StudentSubject implements Model {
     }
 
     public void setTeacherId(int teacherId) {
-        this.teacherId = teacherId;
+        if (teacherId >= 0)
+            this.teacherId = teacherId;
+        else
+            throw new ArithmeticException("Number should be equal or greater than zero");
     }
 
     public double getGrade() {
@@ -36,7 +53,10 @@ public abstract class StudentSubject implements Model {
     }
 
     public void setGrade(double grade) {
-        this.grade = grade;
+        if (grade >= 0 && grade <= 100)
+            this.grade = grade;
+        else
+            throw new ArithmeticException("Number's range - from 0 to 100");
     }
 
     public double getAttendance() {
@@ -44,6 +64,9 @@ public abstract class StudentSubject implements Model {
     }
 
     public void setAttendance(double attendance) {
-        this.attendance = attendance;
+        if (attendance >= 0 && attendance <= 100)
+            this.attendance = attendance;
+        else
+            throw new ArithmeticException("Number's range - from 0 to 100");
     }
 }

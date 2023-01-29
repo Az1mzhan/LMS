@@ -16,7 +16,10 @@ public class Teacher extends User {
     }
 
     public void setLevel(String level) {
-        this.level = level;
+        if (level.length() != 0)
+            this.level = level;
+        else
+            throw new IllegalArgumentException("Illegal group name format");
     }
 
     public String getDegree() {
@@ -24,6 +27,9 @@ public class Teacher extends User {
     }
 
     public void setDegree(String degree) {
-        this.degree = degree;
+        if (degree.length() != 0)
+            this.degree = degree;
+        else
+            throw new IllegalArgumentException("Illegal degree format");
     }
 }

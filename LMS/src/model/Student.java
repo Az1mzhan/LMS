@@ -19,7 +19,10 @@ public class Student extends User {
     }
 
     public void setGroupName(String groupName) {
-        this.groupName = groupName;
+        if (groupName.length() != 0)
+            this.groupName = groupName;
+        else
+            throw new IllegalArgumentException("Illegal group name format");
     }
 
     public String getSubject() {
@@ -27,6 +30,9 @@ public class Student extends User {
     }
 
     public void setSubject(String subject) {
-        this.subject = subject;
+        if (subject.length() != 0)
+            this.subject = subject;
+        else
+            throw new IllegalArgumentException("Illegal subject format");
     }
 }
