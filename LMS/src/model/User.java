@@ -1,7 +1,6 @@
 package model;
 
 import java.time.LocalDateTime;
-import java.util.Scanner;
 public abstract class User implements Model {
     private int id;
     private String name;
@@ -52,8 +51,10 @@ public abstract class User implements Model {
     }
 
     public void setEmail(String email) {
-        if (email.matches("\\b[A-Z0-9._%+-]+@[A-Z0-9.-]+\\.[A-Z]{2,4}\\b"))
+        if (email.matches("^[\\w-\\.]+@([\\w-]+\\.)+[\\w-]{2,4}$"))
             this.email = email;
+        else
+            throw new IllegalArgumentException("Illegal email format");
     }
 
     public String getPassword() {
@@ -63,6 +64,8 @@ public abstract class User implements Model {
     public void setPassword(String password) {
         if (password.matches("^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,16}$"))
             this.password = password;
+        else
+            throw new IllegalArgumentException("Illegal password format");
     }
 
     public String getName() {
@@ -70,8 +73,11 @@ public abstract class User implements Model {
     }
 
     public void setName(String name) {
-        if (name.matches("^(?=.*?[A-Z])}"))
+        if (name.length() != 0
+        )
             this.name = name;
+        else
+            throw new IllegalArgumentException("Illegal name format");
     }
 
     public String getSurname() {
@@ -79,8 +85,10 @@ public abstract class User implements Model {
     }
 
     public void setSurname(String surname) {
-        if (surname.matches("^(?=.*?[A-Z])}"))
+        if (surname.length() != 0)
             this.surname = surname;
+        else
+            throw new IllegalArgumentException("Illegal surname format");
     }
 
     public UserRole getRole() {

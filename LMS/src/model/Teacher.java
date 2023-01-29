@@ -6,7 +6,7 @@ public class Teacher extends User {
 
     public Teacher(int id, String name, String surname, String email, String password, UserRole role, String level, String degree) {
         super(id, name, surname, email, password, role);
-//      // setRole(UserRole.TEACHER); ???
+        setRole(UserRole.TEACHER);
         this.level = level;
         this.degree = degree;
     }

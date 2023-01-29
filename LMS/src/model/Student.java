@@ -9,6 +9,7 @@ public class Student extends User {
 
     public Student(int id, String name, String surname, String email, String password, UserRole role, String groupName, String subject) {
         super(id, name, surname, email, password, role);
+        setRole(UserRole.STUDENT);
         this.groupName = groupName;
         this.subject = subject;
     }
