@@ -1,5 +1,6 @@
 package model;
 
+import exceptions.*;
 import java.time.LocalDateTime;
 public abstract class User implements Model {
     private int id;
@@ -11,12 +12,12 @@ public abstract class User implements Model {
     private LocalDateTime created;
     private LocalDateTime updated;
 
-    public User(int id, String name, String surname, String email, String password, UserRole role) {
-        this.id = id;
-        this.name = name;
-        this.surname = surname;
-        this.email = email;
-        this.password = password;
+    public User(int id, String name, String surname, String email, String password, UserRole role) throws IdException, NameException, SurnameException, EmailException, PasswordException {
+        setId(id);
+        setName(name);
+        setSurname(surname);
+        setEmail(email);
+        setPassword(password);
         this.role = role;
         this.created = LocalDateTime.now();
             this.updated = LocalDateTime.now();
@@ -28,11 +29,11 @@ public abstract class User implements Model {
     }
 
     @Override
-    public void setId(int id) {
-        if (id >= 0)
-            this.id = id;
+    public void setId(int id) throws IdException {
+        if (id < 0)
+            throw new IdException("ID cannot be a negative number");
         else
-            throw new ArithmeticException("Number should be equal or greater than zero");
+            this.id = id;
     }
 
     @Override
@@ -53,44 +54,44 @@ public abstract class User implements Model {
         return email;
     }
 
-    public void setEmail(String email) {
-        if (email.matches("^[\\w-\\.]+@([\\w-]+\\.)+[\\w-]{2,4}$"))
-            this.email = email;
+    public void setEmail(String email) throws EmailException {
+        if (!email.matches("^[\\w-.]+@([\\w-]+\\.)+[\\w-]{2,4}$"))
+            throw new EmailException("This email address doesn't correspond to the format. An email address should consist of at sign (@), prefix (appears to the left of @), domain (appears to the right of @). A domain's length must vary from 2 to 4 symbols");
         else
-            throw new IllegalArgumentException("Illegal email format");
+            this.email = email;
     }
 
     public String getPassword() {
         return password;
     }
 
-    public void setPassword(String password) {
-        if (password.matches("^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,16}$"))
-            this.password = password;
+    public void setPassword(String password) throws PasswordException {
+        if (!password.matches("^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,16}$"))
+            throw new PasswordException("This password doesn't correspond to the format. A password should have at least one uppercase letter, one lowercase letter, one digit, one special symbol and the length of it must vary from 8 to 16 symbols");
         else
-            throw new IllegalArgumentException("Illegal password format");
+            this.password = password;
     }
 
     public String getName() {
         return name;
     }
 
-    public void setName(String name) {
-        if (name.length() != 0)
-            this.name = name;
+    public void setName(String name) throws NameException {
+        if (name.length() == 0)
+            throw new NameException("Name string shouldn't be empty");
         else
-            throw new IllegalArgumentException("Illegal name format");
+            this.name = name;
     }
 
     public String getSurname() {
         return surname;
     }
 
-    public void setSurname(String surname) {
-        if (surname.length() != 0)
-            this.surname = surname;
+    public void setSurname(String surname) throws SurnameException {
+        if (surname.length() == 0)
+            throw new SurnameException("Surname string shouldn't be empty");
         else
-            throw new IllegalArgumentException("Illegal surname format");
+            this.surname = surname;
     }
 
     public UserRole getRole() {
