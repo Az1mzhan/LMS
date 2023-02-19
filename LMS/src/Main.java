@@ -8,6 +8,5 @@ public class Main {
 
         StudentRepository studentController =new StudentRepository();
         System.out.println(studentController.getAll());
-//        studentController.create();
     }
 }
