@@ -3,14 +3,27 @@ package model;
 import exceptions.*;
 
 public class Subject {
+    private int id;
     private String name;
     private String syllabus;
     private int creditNumber;
 
-    public Subject(String name, String syllabus, int creditNumber) throws NameException, SyllabusException, CreditNumberException {
+    public Subject(int id, String name, String syllabus, int creditNumber) throws NameException, SyllabusException, CreditNumberException {
+        setId(id);
         setName(name);
         setSyllabus(syllabus);
         setCreditNumber(creditNumber);
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        if(id >= 0)
+            this.id = id;
+        else
+            throw new IllegalArgumentException("Wrong ID");
     }
 
     public String getName() {

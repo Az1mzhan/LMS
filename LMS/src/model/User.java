@@ -20,17 +20,20 @@ public abstract class User implements Model {
         setPassword(password);
         this.role = role;
         this.created = LocalDateTime.now();
-            this.updated = LocalDateTime.now();
+        this.updated = LocalDateTime.now();
     }
 
     @Override
     public int getId() {
         return id;
     }
+    public static boolean checkId(int id) {
+        return (id >= 0);
+    }
 
     @Override
     public void setId(int id) throws IdException {
-        if (id < 0)
+        if (!checkId(id))
             throw new IdException("ID cannot be a negative number");
         else
             this.id = id;
@@ -38,16 +41,20 @@ public abstract class User implements Model {
 
     @Override
     public LocalDateTime getCreated() {
-        return created;
+        return this.created;
     }
 
     @Override
     public LocalDateTime getUpdated() {
-        return updated;
+        return this.updated;
     }
 
     public void setUpdated() {
         this.updated = LocalDateTime.now();
+    }
+
+    public static boolean checkEmail(String email) {
+        return (!email.matches("^[\\w-.]+@([\\w-]+\\.)+[\\w-]{2,4}$"));
     }
 
     public String getEmail() {
@@ -55,7 +62,7 @@ public abstract class User implements Model {
     }
 
     public void setEmail(String email) throws EmailException {
-        if (!email.matches("^[\\w-.]+@([\\w-]+\\.)+[\\w-]{2,4}$"))
+        if (checkEmail(email))
             throw new EmailException("This email address doesn't correspond to the format. An email address should consist of at sign (@), prefix (appears to the left of @), domain (appears to the right of @). A domain's length must vary from 2 to 4 symbols");
         else
             this.email = email;
@@ -65,8 +72,11 @@ public abstract class User implements Model {
         return password;
     }
 
+    public static boolean checkPassword(String password) {
+        return (!password.matches("^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,16}$"));
+    }
     public void setPassword(String password) throws PasswordException {
-        if (!password.matches("^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,16}$"))
+        if (checkPassword(password))
             throw new PasswordException("This password doesn't correspond to the format. A password should have at least one uppercase letter, one lowercase letter, one digit, one special symbol and the length of it must vary from 8 to 16 symbols");
         else
             this.password = password;

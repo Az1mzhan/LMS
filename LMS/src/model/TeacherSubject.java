@@ -16,7 +16,7 @@ public abstract class TeacherSubject implements Model {
     }
 
     public void setSubjectId(int subjectId) throws SubjectIdException {
-        if (subjectId < 0)
+        if (!Teacher.checkId(subjectId))
             throw new SubjectIdException("Subject ID cannot be a negative number");
         else
             this.subjectId = subjectId;

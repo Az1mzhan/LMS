@@ -22,7 +22,7 @@ public abstract class StudentSubject implements Model {
     }
 
     public void setSubjectId(int subjectId) throws SubjectIdException {
-        if (subjectId < 0)
+        if (!User.checkId(subjectId))
             throw new SubjectIdException("Subject ID cannot be a negative number");
         else
             this.subjectId = subjectId;
@@ -33,7 +33,7 @@ public abstract class StudentSubject implements Model {
     }
 
     public void setStudentId(int studentId) throws StudentIdException {
-        if (studentId < 0)
+        if (!User.checkId(studentId))
             throw new StudentIdException("Student ID cannot be a negative number");
         else
             this.studentId = studentId;
@@ -44,7 +44,7 @@ public abstract class StudentSubject implements Model {
     }
 
     public void setTeacherId(int teacherId) throws TeacherIdException {
-        if (teacherId < 0)
+        if (!User.checkId(teacherId))
             throw new TeacherIdException("Teacher ID cannot be a negative number");
         else
             this.teacherId = teacherId;

@@ -3,21 +3,25 @@ package model;
 import exceptions.*;
 
 public class Teacher extends User {
-    private String degree;
+    private TeacherDegree degree;
 
-    public Teacher(int id, String name, String surname, String email, String password, String degree) throws IdException, NameException, SurnameException, EmailException, PasswordException, DegreeException {
+    public Teacher(int id, String name, String surname, String email, String password, TeacherDegree degree) throws IdException, NameException, SurnameException, EmailException, PasswordException, DegreeException {
         super(id, name, surname, email, password, UserRole.TEACHER);
         setDegree(degree);
     }
 
-    public String getDegree() {
+    public TeacherDegree getDegree() {
         return degree;
     }
 
-    public void setDegree(String degree) throws DegreeException {
-        if (degree.length() == 0)
-            throw new DegreeException("Degree string cannot be empty");
-        else
-            this.degree = degree;
+    public void setDegree(TeacherDegree degree) throws DegreeException {
+        this.degree = degree;
+    }
+    public static TeacherDegree getEnumDegree(String degree) {
+        if(degree.toLowerCase() == "phd")
+            return TeacherDegree.PhD;
+        else if (degree.toLowerCase() == "master")
+            return TeacherDegree.MASTER;
+        return null;
     }
 }
