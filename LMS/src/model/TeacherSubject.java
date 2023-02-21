@@ -2,15 +2,22 @@ package model;
 
 import exceptions.*;
 
-public abstract class TeacherSubject implements Model {
+import java.time.LocalDateTime;
+
+public class TeacherSubject implements Model {
+    private LocalDateTime created;
+    private LocalDateTime updated;
     private static int currentId=0;
     private int id;
     private int subjectId;
     private int teacherId;
 
-    public TeacherSubject(int subjectId, int teacherId) throws SubjectIdException, TeacherIdException {
+    public TeacherSubject(int id, int subjectId, int teacherId) throws SubjectIdException, TeacherIdException {
+        setId(id);
         setSubjectId(subjectId);
         setTeacherId(teacherId);
+        setUpdated();
+        this.created = LocalDateTime.now();
         currentId++;
     }
     public static int getCurrentId() {
@@ -22,7 +29,7 @@ public abstract class TeacherSubject implements Model {
     }
 
     public void setSubjectId(int subjectId) throws SubjectIdException {
-        if (!Teacher.checkId(subjectId))
+        if (subjectId < 0 || subjectId >= Subject.getCurrentId())
             throw new SubjectIdException("ID cannot be a negative number or object with this ID already exists");
         else
             this.subjectId = subjectId;
@@ -32,10 +39,32 @@ public abstract class TeacherSubject implements Model {
     }
 
     public void setTeacherId(int teacherId) throws TeacherIdException {
-        if (teacherId < 0)
+        if (teacherId < 0 || teacherId >= Teacher.getCurrentId())
             throw new TeacherIdException("Teacher ID cannot be a negative number");
         else
             this.teacherId = teacherId;
+    }
+    @Override
+    public LocalDateTime getCreated() {
+        return this.created;
+    }
+
+    @Override
+    public LocalDateTime getUpdated() {
+        return this.updated;
+    }
+    @Override
+    public void setUpdated() {
+        this.updated = LocalDateTime.now();
+    }
+    @Override
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    @Override
+    public int getId() {
+        return this.id;
     }
 
     @Override
