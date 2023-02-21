@@ -2,19 +2,48 @@ package model;
 
 import exceptions.*;
 
-public class Subject {
+import java.time.LocalDateTime;
+
+public class Subject implements Model{
     private static int currentId=0;
     private int id;
     private String name;
     private String syllabus;
     private int creditNumber;
+    private LocalDateTime created;
+    private LocalDateTime updated;
 
     public Subject(int id, String name, String syllabus, int creditNumber) throws NameException, SyllabusException, CreditNumberException {
         setId(id);
         setName(name);
         setSyllabus(syllabus);
         setCreditNumber(creditNumber);
+
+        this.created = LocalDateTime.now();
+        this.updated = LocalDateTime.now();
         currentId++;
+    }
+    public Subject(int id, String name, String syllabus, int creditNumber, LocalDateTime created, LocalDateTime updated) throws NameException, SyllabusException, CreditNumberException {
+        setId(id);
+        setName(name);
+        setSyllabus(syllabus);
+        setCreditNumber(creditNumber);
+
+        this.created = created;
+        this.updated = updated;
+    }
+    @Override
+    public LocalDateTime getCreated() {
+        return this.created;
+    }
+
+    @Override
+    public LocalDateTime getUpdated() {
+        return this.updated;
+    }
+
+    public void setUpdated() {
+        this.updated = LocalDateTime.now();
     }
     public static int getCurrentId() {
         return currentId;
@@ -70,6 +99,8 @@ public class Subject {
                 ", name='" + name + '\'' +
                 ", syllabus='" + syllabus + '\'' +
                 ", creditNumber=" + creditNumber +
+                ", created=" + created +
+                ", updated=" + updated +
                 '}';
     }
 }

@@ -1,0 +1,184 @@
+package repositories;
+
+import connection.PostgresConnectionSingleton;
+import exceptions.*;
+import model.*;
+
+import java.sql.*;
+import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+
+public abstract class ImplementationCRUD implements CRUD{
+    private final PostgresConnectionSingleton psql = PostgresConnectionSingleton.getInstance();
+
+    protected ImplementationCRUD() throws SQLException, ClassNotFoundException {
+    }
+
+    public static String getFields(String tableName) throws IllegalAccessException {
+        switch (tableName) {
+            case STUDENT:
+                return ("(id, name, surname, email, password, group_name, created, updated)"
+                        + "values (?, ?, ?, ?, ?, ?, ?, ?)");
+            case TEACHER:
+                return ("(id, name, surname, email, password, degree, created, updated)"
+                        + "values (?, ?, ?, ?, ?, ?, ?, ?)");
+            case SUBJECT:
+                return ("(id, name, syllabus, creditNumber)"
+                        + "values (?, ?, ?, ?)");
+            case STUDENT_SUBJECT:
+                return ("subject_id, student_id, teacher_id, grade, attendance"
+                        + "values (?, ?, ?, ?, ?)");
+            case TEACHER_SUBJECT:
+                return ("subject_id, teacher_id"
+                        + "values (?, ?)");
+            default:
+                throw new IllegalAccessException("No such table");
+        }
+    }
+
+    private PreparedStatement getPreparedStatement(String sql, Model model) throws SQLException {
+        System.out.println();
+        PreparedStatement preparedStatement = psql.getConnection().prepareStatement(sql);
+        if (model.getClass().equals(Student.class)) {//                ("(id, name, surname, email, password, groupName, created, updated)
+            preparedStatement.setInt(1, model.getId());
+            preparedStatement.setString(2, ((Student) model).getName());
+            preparedStatement.setString(3, ((Student) model).getSurname());
+            preparedStatement.setString(4, ((Student) model).getEmail());
+            preparedStatement.setString(5, ((Student) model).getPassword());
+            preparedStatement.setString(6, ((Student) model).getGroupName());
+            preparedStatement.setString(7, ((Student) model).getCreated().toString());
+            preparedStatement.setString(8, ((Student) model).getUpdated().toString());
+        }
+        else if (model.getClass().equals(Teacher.class)) {//                "(id, name, surname, email, password, degree, created, updated)"
+            preparedStatement.setInt(1, model.getId());
+            preparedStatement.setString(2, ((Teacher) model).getName());
+            preparedStatement.setString(3, ((Teacher) model).getSurname());
+            preparedStatement.setString(4, ((Teacher) model).getEmail());
+            preparedStatement.setString(5, ((Teacher) model).getPassword());
+            preparedStatement.setString(6, ((Teacher) model).getDegree());
+            preparedStatement.setString(7, ((Teacher) model).getCreated().toString());
+            preparedStatement.setString(8, ((Teacher) model).getUpdated().toString());
+        }
+        else if (model.getClass().equals(Subject.class)) {//                "(id, name, syllabus, creditNumber)
+            preparedStatement.setInt(1, model.getId());
+            preparedStatement.setString(2, ((Subject) model).getName());
+            preparedStatement.setString(3, ((Subject) model).getSyllabus());
+            preparedStatement.setInt(4, ((Subject) model).getCreditNumber());
+            preparedStatement.setString(5, ((Subject) model).getCreated().toString());
+            preparedStatement.setString(6, ((Subject) model).getUpdated().toString());
+        }
+        else if (model.getClass().equals(StudentSubject.class)){
+            preparedStatement.setInt(1, model.getId());
+            preparedStatement.setInt(2, ((StudentSubject) model).getStudentId());
+            preparedStatement.setInt(3, ((StudentSubject) model).getTeacherId());
+            preparedStatement.setDouble(3, ((StudentSubject) model).getGrade());
+            preparedStatement.setDouble(4, ((StudentSubject) model).getAttendance());
+            preparedStatement.setString(5, ((StudentSubject) model).getCreated().toString());
+            preparedStatement.setString(6, ((StudentSubject) model).getUpdated().toString());
+        }
+        else if (model.getClass().equals(TeacherSubject.class)) {//                "subjectId, teacherId"
+            preparedStatement.setInt(1, model.getId());
+            preparedStatement.setInt(2, ((TeacherSubject) model).getSubjectId());
+            preparedStatement.setInt(3, ((TeacherSubject) model).getTeacherId());
+        }
+        return preparedStatement;
+    }
+
+    public void create (String tableName, Model model) throws SQLException, IllegalAccessException {
+        String sql = null;
+        sql = "insert into " + tableName + " " + getFields(tableName);
+        PreparedStatement preparedStatement =  getPreparedStatement(sql, model);
+        preparedStatement.execute();
+        preparedStatement.close();
+        System.out.println("Student have been added.");
+    }
+
+    private Model buildModel(ResultSet resultSet, String tableNames) throws SQLException, PasswordException, NameException, GroupNameException, EmailException, SubjectException, SurnameException, IdException, DegreeException, SyllabusException, CreditNumberException, TeacherIdException, SubjectIdException, AttendanceException, StudentIdException, GradeException {
+        switch (tableNames) {
+            case STUDENT:
+                return new Student(
+                    resultSet.getInt("id"),
+                    resultSet.getString("name"),
+                    resultSet.getString("surname"),
+                    resultSet.getString("email"),
+                    resultSet.getString("password"),
+                    resultSet.getString("group_name"),
+                    LocalDateTime.parse(resultSet.getString("created")),
+                    LocalDateTime.parse(resultSet.getString("updated"))
+                );
+            case TEACHER:
+                return new Teacher(
+                        resultSet.getInt("id"),
+                        resultSet.getString("name"),
+                        resultSet.getString("surname"),
+                        resultSet.getString("email"),
+                        resultSet.getString("password"),
+                        resultSet.getString("degree"),
+                        LocalDateTime.parse(resultSet.getString("created")),
+                        LocalDateTime.parse(resultSet.getString("updated"))
+                );
+            case SUBJECT:
+                return new Subject(
+                        resultSet.getInt("id"),
+                        resultSet.getString("name"),
+                        resultSet.getString("syllabus"),
+                        resultSet.getInt("creditnumber"),
+                        LocalDateTime.parse(resultSet.getString("created")),
+                        LocalDateTime.parse(resultSet.getString("updated"))
+                );
+            case TEACHER_SUBJECT:
+                return new TeacherSubject(
+                        resultSet.getInt("id"),
+                        resultSet.getInt("subject_id"),
+                        resultSet.getInt("teacher_id"),
+                        LocalDateTime.parse(resultSet.getString("created")),
+                        LocalDateTime.parse(resultSet.getString("updated"))
+                );
+            case STUDENT_SUBJECT:
+                return new StudentSubject(
+                        resultSet.getInt("id"),
+                        resultSet.getInt("subject_id"),
+                        resultSet.getInt("student_id"),
+                        resultSet.getInt("teacher_id"),
+                        resultSet.getDouble("grade"),
+                        resultSet.getDouble("attendance"),
+                        LocalDateTime.parse(resultSet.getString("created")),
+                        LocalDateTime.parse(resultSet.getString("updated"))
+                );
+            default:
+                throw new IllegalArgumentException("wrong table name");
+        }
+    }
+
+    public  List<Model> getAll(String tableName) throws SQLException, PasswordException, NameException, GroupNameException, EmailException, SubjectException, SurnameException, IdException, TeacherIdException, DegreeException, AttendanceException, StudentIdException, GradeException, SyllabusException, CreditNumberException, SubjectIdException {
+        String sql = "select *  from " + tableName;
+        List<Model> list = new ArrayList<>();
+        Connection conn = psql.getConnection();
+
+        Statement statement= conn.createStatement();
+        ResultSet resultSet = statement.executeQuery(sql);
+
+        while (resultSet.next()) {
+            Model m = buildModel(resultSet, tableName);
+            list.add(m);
+        }
+
+        resultSet.close();
+        statement.close();
+
+        return Collections.singletonList((Model) list);
+    }
+//    List<Object> getAll(TableNames tableName) throws SQLException;
+//    Model getById(TableNames tableName, int id) throws SQLException;
+//
+//    void update (TableNames tableName, int id) throws SQLException;
+//    void delete(TableNames tableName, int id) throws SQLException ;
+    public final static String STUDENT = "student";
+    public final static String TEACHER = "teacher";
+    public final static String SUBJECT = "subject";
+    public final static String STUDENT_SUBJECT = "student subject";
+    public final static String TEACHER_SUBJECT = "teacher subject";
+
+}

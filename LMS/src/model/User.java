@@ -9,11 +9,11 @@ public abstract class User implements Model {
     private String surname;
     private String email;
     private String password;
-    private UserRole role;
+    private String role;
     private LocalDateTime created;
     private LocalDateTime updated;
 
-    public User(int id, String name, String surname, String email, String password, UserRole role) throws IdException, NameException, SurnameException, EmailException, PasswordException {
+    public User(int id, String name, String surname, String email, String password, String role) throws IdException, NameException, SurnameException, EmailException, PasswordException {
         setId(id);
         setName(name);
         setSurname(surname);
@@ -23,6 +23,17 @@ public abstract class User implements Model {
         this.created = LocalDateTime.now();
         this.updated = LocalDateTime.now();
         currentId++;
+    }
+
+    public User(int id, String name, String surname, String email, String password, String role, LocalDateTime created, LocalDateTime updated) throws IdException, NameException, SurnameException, EmailException, PasswordException {
+        setId(id);
+        setName(name);
+        setSurname(surname);
+        setEmail(email);
+        setPassword(password);
+        this.role = role;
+        this.created = created;
+        this.updated = updated;
     }
 
     public static int getCurrentId() {
@@ -110,11 +121,11 @@ public abstract class User implements Model {
             this.surname = surname;
     }
 
-    public UserRole getRole() {
+    public String getRole() {
         return role;
     }
 
-    public void setRole(UserRole role) {
+    public void setRole(String role) {
         this.role = role;
     }
 
@@ -131,4 +142,6 @@ public abstract class User implements Model {
                 ", updated=" + updated +
                 '}';
     }
+    public final static String TEACHER = "teacher";
+    public final static String STUDENT = "student";
 }

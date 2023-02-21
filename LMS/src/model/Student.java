@@ -1,12 +1,20 @@
 package model;
 
 import exceptions.*;
+
+import java.time.LocalDateTime;
+
 public class Student extends User {
 
     private String groupName;
     public Student(int id, String name, String surname, String email, String password, String groupName) throws IdException, NameException, SurnameException, EmailException, PasswordException, GroupNameException, SubjectException {
-        super(id, name, surname, email, password, UserRole.STUDENT);
+        super(id, name, surname, email, password, User.STUDENT);
         setGroupName(groupName);
+    }
+    public Student(int id, String name, String surname, String email, String password, String groupName, LocalDateTime created, LocalDateTime updated) throws IdException, NameException, SurnameException, EmailException, PasswordException, GroupNameException, SubjectException {
+        super(id, name, surname, email, password, User.STUDENT, created, updated);
+        setGroupName(groupName);
+
     }
 
     public String getGroupName() {
@@ -26,4 +34,5 @@ public class Student extends User {
                 "groupName='" + groupName + '\'' +
                 '}';
     }
+
 }

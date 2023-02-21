@@ -20,6 +20,13 @@ public class TeacherSubject implements Model {
         this.created = LocalDateTime.now();
         currentId++;
     }
+    public TeacherSubject(int id, int subjectId, int teacherId, LocalDateTime created, LocalDateTime updated) throws SubjectIdException, TeacherIdException {
+        setId(id);
+        setSubjectId(subjectId);
+        setTeacherId(teacherId);
+        this.created = created;
+        this.updated = updated;
+    }
     public static int getCurrentId() {
         return currentId;
     }
