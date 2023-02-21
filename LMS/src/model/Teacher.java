@@ -1,35 +1,34 @@
 package model;
 
+import exceptions.*;
+
+import java.time.LocalDateTime;
+
 public class Teacher extends User {
-    private String level;
     private String degree;
 
-    public Teacher(int id, String name, String surname, String email, String password, UserRole role, String level, String degree) {
-        super(id, name, surname, email, password, role);
-        setRole(UserRole.TEACHER);
-        this.level = level;
-        this.degree = degree;
+    public Teacher(int id, String name, String surname, String email, String password, String degree) throws IdException, NameException, SurnameException, EmailException, PasswordException, DegreeException {
+        super(id, name, surname, email, password, User.TEACHER);
+        setDegree(degree);
     }
 
-    public String getLevel() {
-        return level;
-    }
-
-    public void setLevel(String level) {
-        if (level.length() != 0)
-            this.level = level;
-        else
-            throw new IllegalArgumentException("Illegal group name format");
+    public Teacher(int id, String name, String surname, String email, String password, String degree, LocalDateTime created, LocalDateTime updated) throws IdException, NameException, SurnameException, EmailException, PasswordException, DegreeException {
+        super(id, name, surname, email, password, User.TEACHER, created, updated);
+        setDegree(degree);
     }
 
     public String getDegree() {
         return degree;
     }
-
-    public void setDegree(String degree) {
-        if (degree.length() != 0)
-            this.degree = degree;
-        else
-            throw new IllegalArgumentException("Illegal degree format");
+    public void setDegree(String degree) throws DegreeException {
+        this.degree = degree;
     }
+    @Override
+    public String toString() {
+        return super.toString()+"Teacher{" +
+                "degree=" + degree +
+                '}';
+    }
+    public final static String PhD = "phd";
+    public final static String MASTER = "master";
 }
