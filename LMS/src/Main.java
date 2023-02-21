@@ -32,6 +32,8 @@ public class Main {
 //            teacherRepository.create(ImplementationCRUD.TEACHER, t);
             List<Model> tl = teacherRepository.getAll(ImplementationCRUD.TEACHER);
             System.out.println(tl);
+            Teacher tt = (Teacher) teacherRepository.getById(ImplementationCRUD.TEACHER, 0);
+            System.out.println(tt);
         } catch (Exception e) {
             System.out.println(e);
         }

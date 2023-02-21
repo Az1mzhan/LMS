@@ -154,6 +154,7 @@ public abstract class ImplementationCRUD implements CRUD{
 
     public  List<Model> getAll(String tableName) throws SQLException, PasswordException, NameException, GroupNameException, EmailException, SubjectException, SurnameException, IdException, TeacherIdException, DegreeException, AttendanceException, StudentIdException, GradeException, SyllabusException, CreditNumberException, SubjectIdException {
         String sql = "select *  from " + tableName;
+
         List<Model> list = new ArrayList<>();
         Connection conn = psql.getConnection();
 
@@ -168,12 +169,26 @@ public abstract class ImplementationCRUD implements CRUD{
         resultSet.close();
         statement.close();
 
-        return Collections.singletonList((Model) list);
+        return list;
     }
-//    List<Object> getAll(TableNames tableName) throws SQLException;
-//    Model getById(TableNames tableName, int id) throws SQLException;
-//
-//    void update (TableNames tableName, int id) throws SQLException;
+
+    public Model getById(String tableName, int id) throws SQLException, TeacherIdException, StudentIdException, GradeException, GroupNameException, SubjectException, CreditNumberException, PasswordException, DegreeException, AttendanceException, NameException, EmailException, SyllabusException, SurnameException, SubjectIdException, IdException {
+        String sql = "select *  from " + tableName + " where id = "  + id;
+        System.out.println(sql);
+        Statement statement= psql.getConnection().createStatement();
+        ResultSet resultSet= statement.executeQuery(sql);
+        while (resultSet.next()) {
+            Model m = buildModel(resultSet, tableName);
+            resultSet.close();
+            statement.close();
+            return m;
+        }
+        resultSet.close();
+        statement.close();
+        return null;
+    }
+
+//    public void update (TableNames tableName, int id) throws SQLException;
 //    void delete(TableNames tableName, int id) throws SQLException ;
     public final static String STUDENT = "student";
     public final static String TEACHER = "teacher";

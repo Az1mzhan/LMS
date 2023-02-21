@@ -5,12 +5,13 @@ import exceptions.*;
 import java.time.LocalDateTime;
 
 public class TeacherSubject implements Model {
-    private LocalDateTime created;
-    private LocalDateTime updated;
     private static int currentId=0;
     private int id;
     private int subjectId;
     private int teacherId;
+
+    private LocalDateTime created;
+    private LocalDateTime updated;
 
     public TeacherSubject(int id, int subjectId, int teacherId) throws SubjectIdException, TeacherIdException {
         setId(id);
@@ -20,13 +21,27 @@ public class TeacherSubject implements Model {
         this.created = LocalDateTime.now();
         currentId++;
     }
-    public TeacherSubject(int id, int subjectId, int teacherId, LocalDateTime created, LocalDateTime updated) throws SubjectIdException, TeacherIdException {
-        setId(id);
-        setSubjectId(subjectId);
-        setTeacherId(teacherId);
+
+    public TeacherSubject(int id, int subjectId, int teacherId, LocalDateTime created, LocalDateTime updated) {
+        this.id = id;
+        this.subjectId = subjectId;
+        this.teacherId = teacherId;
         this.created = created;
         this.updated = updated;
     }
+
+    public void setCreated(LocalDateTime created) {
+        this.created = created;
+    }
+
+    public void setUpdated(LocalDateTime updated) {
+        this.updated = updated;
+    }
+
+    public static void setCurrentId(int currentId) {
+        TeacherSubject.currentId = currentId;
+    }
+
     public static int getCurrentId() {
         return currentId;
     }

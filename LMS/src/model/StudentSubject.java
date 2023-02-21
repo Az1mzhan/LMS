@@ -24,15 +24,16 @@ public class StudentSubject implements Model {
         setAttendance(attendance);
         currentId++;
     }
-    public StudentSubject(int id, int subjectId, int studentId, int teacherId, double grade, double attendance, LocalDateTime created, LocalDateTime updated) throws SubjectIdException, StudentIdException, TeacherIdException, GradeException, AttendanceException, IdException {
-        setId(id);
-        setSubjectId(subjectId);
-        setStudentId(studentId);
-        setTeacherId(teacherId);
-        setGrade(grade);
-        setAttendance(attendance);
-        this.created=created;
-        this.updated=updated;
+
+    public StudentSubject(int id, int subjectId, int studentId, int teacherId, double grade, double attendance, LocalDateTime created, LocalDateTime updated) {
+        this.id = id;
+        this.subjectId = subjectId;
+        this.studentId = studentId;
+        this.teacherId = teacherId;
+        this.grade = grade;
+        this.attendance = attendance;
+        this.created = created;
+        this.updated = updated;
     }
 
     @Override

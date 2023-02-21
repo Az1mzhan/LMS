@@ -25,12 +25,12 @@ public abstract class User implements Model {
         currentId++;
     }
 
-    public User(int id, String name, String surname, String email, String password, String role, LocalDateTime created, LocalDateTime updated) throws IdException, NameException, SurnameException, EmailException, PasswordException {
-        setId(id);
-        setName(name);
-        setSurname(surname);
-        setEmail(email);
-        setPassword(password);
+    public User(int id, String name, String surname, String email, String password, String role, LocalDateTime created, LocalDateTime updated) {
+        this.id = id;
+        this.name = name;
+        this.surname = surname;
+        this.email = email;
+        this.password = password;
         this.role = role;
         this.created = created;
         this.updated = updated;

@@ -24,11 +24,10 @@ public class Subject implements Model{
         currentId++;
     }
     public Subject(int id, String name, String syllabus, int creditNumber, LocalDateTime created, LocalDateTime updated) throws NameException, SyllabusException, CreditNumberException {
-        setId(id);
-        setName(name);
-        setSyllabus(syllabus);
-        setCreditNumber(creditNumber);
-
+        this.id = id;
+        this.name = name;
+        this.syllabus=syllabus;
+        this.creditNumber=creditNumber;
         this.created = created;
         this.updated = updated;
     }
