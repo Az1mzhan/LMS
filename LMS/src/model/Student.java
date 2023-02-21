@@ -2,6 +2,7 @@ package model;
 
 import exceptions.*;
 public class Student extends User {
+
     private String groupName;
     public Student(int id, String name, String surname, String email, String password, String groupName) throws IdException, NameException, SurnameException, EmailException, PasswordException, GroupNameException, SubjectException {
         super(id, name, surname, email, password, UserRole.STUDENT);
@@ -17,5 +18,12 @@ public class Student extends User {
             throw new GroupNameException("Group name string shouldn't be empty");
         else
             this.groupName = groupName;
+    }
+
+    @Override
+    public String toString() {
+        return super.toString()+"Student{" +
+                "groupName='" + groupName + '\'' +
+                '}';
     }
 }

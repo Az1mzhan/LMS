@@ -3,6 +3,7 @@ package model;
 import exceptions.*;
 
 public abstract class StudentSubject implements Model {
+    private static int currentId=0;
     private int subjectId;
     private int studentId;
     private int teacherId;
@@ -15,6 +16,10 @@ public abstract class StudentSubject implements Model {
         setTeacherId(teacherId);
         setGrade(grade);
         setAttendance(attendance);
+        currentId++;
+    }
+    public static int getCurrentId() {
+        return currentId;
     }
 
     public int getSubjectId() {
@@ -22,8 +27,8 @@ public abstract class StudentSubject implements Model {
     }
 
     public void setSubjectId(int subjectId) throws SubjectIdException {
-        if (!User.checkId(subjectId))
-            throw new SubjectIdException("Subject ID cannot be a negative number");
+        if ((subjectId >= 0 && subjectId == currentId))
+            throw new SubjectIdException("ID cannot be a negative number or object with this ID already exists");
         else
             this.subjectId = subjectId;
     }
@@ -70,5 +75,16 @@ public abstract class StudentSubject implements Model {
             throw new AttendanceException("Attendance's percentage can vary from 0 to 100");
         else
             this.attendance = attendance;
+    }
+
+    @Override
+    public String toString() {
+        return "StudentSubject{" +
+                "subjectId=" + subjectId +
+                ", studentId=" + studentId +
+                ", teacherId=" + teacherId +
+                ", grade=" + grade +
+                ", attendance=" + attendance +
+                '}';
     }
 }

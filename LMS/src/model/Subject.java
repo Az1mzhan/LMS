@@ -3,6 +3,7 @@ package model;
 import exceptions.*;
 
 public class Subject {
+    private static int currentId=0;
     private int id;
     private String name;
     private String syllabus;
@@ -13,17 +14,20 @@ public class Subject {
         setName(name);
         setSyllabus(syllabus);
         setCreditNumber(creditNumber);
+        currentId++;
     }
-
+    public static int getCurrentId() {
+        return currentId;
+    }
     public int getId() {
         return id;
     }
 
     public void setId(int id) {
-        if(id >= 0)
+        if((id >= 0 && id == currentId))
             this.id = id;
         else
-            throw new IllegalArgumentException("Wrong ID");
+            throw new IllegalArgumentException("ID cannot be a negative number or object with this ID already exists");
     }
 
     public String getName() {
@@ -57,5 +61,15 @@ public class Subject {
             throw new CreditNumberException("Subject must have at least one credit");
         else
             this.creditNumber = creditNumber;
+    }
+
+    @Override
+    public String toString() {
+        return "Subject{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", syllabus='" + syllabus + '\'' +
+                ", creditNumber=" + creditNumber +
+                '}';
     }
 }

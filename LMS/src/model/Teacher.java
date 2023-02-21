@@ -13,7 +13,6 @@ public class Teacher extends User {
     public TeacherDegree getDegree() {
         return degree;
     }
-
     public void setDegree(TeacherDegree degree) throws DegreeException {
         this.degree = degree;
     }
@@ -23,5 +22,12 @@ public class Teacher extends User {
         else if (degree.toLowerCase() == "master")
             return TeacherDegree.MASTER;
         return null;
+    }
+
+    @Override
+    public String toString() {
+        return super.toString()+"Teacher{" +
+                "degree=" + degree +
+                '}';
     }
 }

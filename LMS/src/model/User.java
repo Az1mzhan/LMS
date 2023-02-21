@@ -3,6 +3,7 @@ package model;
 import exceptions.*;
 import java.time.LocalDateTime;
 public abstract class User implements Model {
+    private static int currentId=0;
     private int id;
     private String name;
     private String surname;
@@ -21,6 +22,11 @@ public abstract class User implements Model {
         this.role = role;
         this.created = LocalDateTime.now();
         this.updated = LocalDateTime.now();
+        currentId++;
+    }
+
+    public static int getCurrentId() {
+        return currentId;
     }
 
     @Override
@@ -28,13 +34,13 @@ public abstract class User implements Model {
         return id;
     }
     public static boolean checkId(int id) {
-        return (id >= 0);
+        return (id >= 0 && id == currentId);
     }
 
     @Override
     public void setId(int id) throws IdException {
         if (!checkId(id))
-            throw new IdException("ID cannot be a negative number");
+            throw new IdException("ID cannot be a negative number or object with this ID already exists");
         else
             this.id = id;
     }
@@ -110,5 +116,19 @@ public abstract class User implements Model {
 
     public void setRole(UserRole role) {
         this.role = role;
+    }
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", surname='" + surname + '\'' +
+                ", email='" + email + '\'' +
+                ", password='" + password + '\'' +
+                ", role=" + role +
+                ", created=" + created +
+                ", updated=" + updated +
+                '}';
     }
 }
