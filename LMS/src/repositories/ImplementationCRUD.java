@@ -190,6 +190,17 @@ public abstract class ImplementationCRUD implements CRUD{
 
 //    public void update (TableNames tableName, int id) throws SQLException;
 //    void delete(TableNames tableName, int id) throws SQLException ;
+     public void delete(String modelName , int modelId) throws SQLException, GroupNameException, SubjectException, CreditNumberException, PasswordException, DegreeException, AttendanceException, NameException, EmailException, SyllabusException, SurnameException, SubjectIdException, IdException, TeacherIdException, StudentIdException, GradeException {
+        Model model = getById(modelName , modelId);
+        if(model == null){
+            throw new IdException("invalid login");
+        }
+        Statement statement = psql.getConnection().createStatement();
+        statement.executeUpdate("delete from " + modelName + " where  id =" + modelId);
+        statement.close();
+    }
+    
+    
     public final static String STUDENT = "student";
     public final static String TEACHER = "teacher";
     public final static String SUBJECT = "subject";
