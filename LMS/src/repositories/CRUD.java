@@ -11,6 +11,6 @@ public interface CRUD {
 
     Model getById(String tableName, int id) throws SQLException, TeacherIdException, StudentIdException, GradeException, GroupNameException, SubjectException, CreditNumberException, PasswordException, DegreeException, AttendanceException, NameException, EmailException, SyllabusException, SurnameException, SubjectIdException, IdException;
 //
-//    void update (TableNames tableName, int id) throws SQLException;
+    void update (String tableName, int id, List<String> fields, List<Object>values) throws SQLException;
 //    void delete(TableNames tableName, int id) throws SQLException ;
 }

@@ -6,9 +6,7 @@ import model.*;
 
 import java.sql.*;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
 
 public abstract class ImplementationCRUD implements CRUD{
     private final PostgresConnectionSingleton psql = PostgresConnectionSingleton.getInstance();
@@ -187,8 +185,38 @@ public abstract class ImplementationCRUD implements CRUD{
         statement.close();
         return null;
     }
+    public void update (String tableName, int id, List<String>fields, List<Object>values) throws SQLException {
+        Connection conn = psql.getConnection();
+        String sql = "select * from "
+                + tableName
+                +" where id="+id;
 
-//    public void update (TableNames tableName, int id) throws SQLException;
+        Statement statement = conn.createStatement();
+        ResultSet resultSet = statement.executeQuery(sql);
+
+        if (!resultSet.next()) {
+            throw new NoSuchElementException("Can't update no such element");
+        }
+        sql = "update " + tableName + " set ";
+        for(int i = 0; i < values.size(); i++) {
+            sql+=fields.get(i) + " = ?";
+            if(i +1 < values.size())
+                sql+=", ";
+        }
+        sql += " where id = " + id;
+        System.out.println(sql);
+        PreparedStatement preparedStatement = conn.prepareStatement(sql);
+        for(int i = 0; i < values.size(); i++) {
+            if(values.get(i).getClass().equals(String.class)) {
+                preparedStatement.setString(i+1, (String) values.get(i));
+            }
+            else if(values.get(i).getClass().equals(Integer.class)) {
+                preparedStatement.setInt(i+1, (Integer) values.get(i));
+            }
+        }
+        preparedStatement.executeUpdate();
+        preparedStatement.close();
+    }
 //    void delete(TableNames tableName, int id) throws SQLException ;
     public final static String STUDENT = "student";
     public final static String TEACHER = "teacher";

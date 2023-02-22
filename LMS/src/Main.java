@@ -6,6 +6,7 @@ import repositories.StudentRepository;
 import repositories.TeacherRepository;
 
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 public class Main {
@@ -13,8 +14,31 @@ public class Main {
         System.out.println(m);
     }
     public static void main(String[] args) throws SQLException, ClassNotFoundException {
+//        List< Object > l = new ArrayList<Object>();
+//        String s = "scmlskm";
+//        Integer i = Integer.valueOf(020);
+//        l.add(s);
+//        l.add(i);
+//        for(Object o : l) {
+//            System.out.println(o);
+//            System.out.println(o.getClass());
+//        }
         StudentRepository studentRepository = new StudentRepository();
         TeacherRepository teacherRepository = new TeacherRepository();
+        List<String>fields = new ArrayList<String>();
+        fields.add(Student.SURNAME_FIELD);
+        fields.add(Student.NAME_FIELD);
+
+        List<Object>values = new ArrayList<Object>();
+        values.add(new String("problema nadira ne v tom"));
+        values.add(new String("chto on nadir, a v tom, chto on dalbaeb"));
+
+        try {
+            studentRepository.update(ImplementationCRUD.STUDENT, 0, fields, values);
+        } catch (Exception e){
+            System.out.println(e);
+        }
+
 //        try {
 //            Model s = new Student(User.getCurrentId(), "b", "z", "Zhn@gmail.com", "1Qw_2xvIosf*", "2207");
 //            System.out.println(s);
@@ -24,20 +48,20 @@ public class Main {
 //        } catch (Exception e) {
 //            System.out.println(e);
 //        }
-        try {
-            Teacher t = new Teacher(User.getCurrentId(), "b", "z", "Zhn@gmail.com", "1Qw_2xvIosf*", Teacher.PhD);
-//            Teacher t = new Teacher(User.getCurrentId(), "b", "z", "Zhn@gmail.com", "1Qw_2xvIosf*", Teacher.PhD);
-            System.out.println(t);
-//            teacherRepository.create(1, t);
-//            teacherRepository.create(ImplementationCRUD.TEACHER, t);
-            List<Model> tl = teacherRepository.getAll(ImplementationCRUD.TEACHER);
-            System.out.println(tl);
-            Teacher tt = (Teacher) teacherRepository.getById(ImplementationCRUD.TEACHER, 0);
-            System.out.println(tt);
-        } catch (Exception e) {
-            System.out.println(e);
-        }
 //        try {
+//            Teacher t = new Teacher(User.getCurrentId(), "b", "z", "Zhn@gmail.com", "1Qw_2xvIosf*", Teacher.PhD);
+////            Teacher t = new Teacher(User.getCurrentId(), "b", "z", "Zhn@gmail.com", "1Qw_2xvIosf*", Teacher.PhD);
+//            System.out.println(t);
+////            teacherRepository.create(1, t);
+////            teacherRepository.create(ImplementationCRUD.TEACHER, t);
+//            List<Model> tl = teacherRepository.getAll(ImplementationCRUD.TEACHER);
+//            System.out.println(tl);
+//            Teacher tt = (Teacher) teacherRepository.getById(ImplementationCRUD.TEACHER, 0);
+//            System.out.println(tt);
+//        } catch (Exception e) {
+//            System.out.println(e);
+//        }
+////        try {
 //            Subject s1 = new Subject(Subject.getCurrentId(), "Calculus1", "cnsjkdcnkjsd", 5);
 //            System.out.println(s1);
 //        } catch (Exception e) {
