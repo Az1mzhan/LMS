@@ -31,4 +31,6 @@ public class Teacher extends User {
     }
     public final static String PhD = "phd";
     public final static String MASTER = "master";
+
+    public final static String DEGREE_FIELD = "degree";
 }

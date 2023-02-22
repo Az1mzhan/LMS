@@ -131,4 +131,13 @@ public class StudentSubject implements Model {
                 ", attendance=" + attendance +
                 '}';
     }
+
+    public final static String ID_FIELD = "id";
+    public final static String SUBJECT_ID_FIELD = "subject_id";
+    public final static String STUDENT_ID_FIELD = "student_id";
+    public final static String TEACHER_ID_FIELD = "teacher_id";
+    public final static String GRADE_FIELD = "grade";
+    public final static String ATTENDANCE_FIELD = "attendance";
+    public final static String CREATED_FIELD = "created";
+    public final static String UPDATED_FIELD = "updated";
 }

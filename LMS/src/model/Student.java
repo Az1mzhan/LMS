@@ -35,4 +35,5 @@ public class Student extends User {
                 '}';
     }
 
+    public final static String GROUP_NAME_FIELD = "group_name";
 }

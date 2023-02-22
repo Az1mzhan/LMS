@@ -102,4 +102,17 @@ public class Subject implements Model{
                 ", updated=" + updated +
                 '}';
     }
+
+    public final static String ID_FIELD = "id";
+    public final static String NAME_FIELD = "name";
+    public final static String SYLLABUS_FIELD = "syllabus";
+    public final static String CREDIT_NUMBER_FIELD = "creditNumber";
+    public final static String CREATED_FIELD = "created";
+    public final static String UPDATED_FIELD = "updated";
 }
+/*this.id = id;
+        this.name = name;
+        this.syllabus=syllabus;
+        this.creditNumber=creditNumber;
+        this.created = created;
+        this.updated = updated;*/

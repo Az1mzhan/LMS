@@ -144,4 +144,21 @@ public abstract class User implements Model {
     }
     public final static String TEACHER = "teacher";
     public final static String STUDENT = "student";
+    public final static String ID_FIELD = "id";
+    public final static String NAME_FIELD = "name";
+    public final static String SURNAME_FIELD = "surname";
+    public final static String EMAIL_FIELD = "email";
+    public final static String PASSWORD_FIELD = "password";
+    public final static String ROLE_FIELD = "role";
+    public final static String CREATED_FIELD = "created";
+    public final static String UPDATED_FIELD = "updated";
 }
+/* private int id;
+    private String name;
+    private String surname;
+    private String email;
+    private String password;
+    private String role;
+    private LocalDateTime created;
+    private LocalDateTime updated;
+* */

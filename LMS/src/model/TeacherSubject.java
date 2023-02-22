@@ -97,4 +97,18 @@ public class TeacherSubject implements Model {
                 ", teacherId=" + teacherId +
                 '}';
     }
+
+
+    public final static String ID_FIELD = "id";
+    public final static String SUBJECT_ID_FIELD = "subject_id";
+    public final static String TEACHER_ID_FIELD = "teacher_id";
+    public final static String CREATED_FIELD = "created";
+    public final static String UPDATED_FIELD = "updated";
 }
+/*
+    private int id;
+    private int subjectId;
+    private int teacherId;
+
+    private LocalDateTime created;
+    private LocalDateTime updated;*/
